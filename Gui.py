@@ -1,24 +1,52 @@
-from logging import root
 from tkinter import *
-from PIL import ImageTk, Image
-
-root = Tk()
-
-root.title('Instagram')
-# root.geometry('750x580+700+200')
+from PIL import Image, ImageTk
 
 
-def say(name):
-    print("hello " + name)
-    
+def gui(src):
+    root = Tk()
+    root.geometry('368x240')
+    root.title("Instagram")
+    # root.iconbitmap(r'./insta4.ico')
 
-# imgName = Label(root, text=)
+    frame = Frame(root, width=480, height=360)
+    frame.pack()
+    frame.place(anchor='e', relx=0.65, rely=0.5)
 
-img = ImageTk.PhotoImage(Image.open("./watchdog/fox.jpg"))
-imLab = Label(image=img)
-imLab.pack()
+    def description():
+        global result
+        result = text.get("1.0", "end")
+        # print(result)
+        # return result
 
-btn = Button(root, text="click", command=lambda:say("shanu"))
-btn.pack()
+    def postAndClose():
+        btn.config(command='hello')
+        description()
+        root.destroy()
 
-root.mainloop()
+    photo = Image.open(src)
+    resized = photo.resize((240, 144))
+    new_photo = ImageTk.PhotoImage(resized)
+
+    fileNameTemp = src.replace('./img_file/', '')
+
+    text = Label(root, text=fileNameTemp,  font=(
+        'Helvetica 15 underline'), pady=5)
+    text.pack()
+
+    labelphoto = Label(frame, image=new_photo)
+    labelphoto.pack()
+
+    btn = Button(root, text=' Post ', width=8, height=2, command=postAndClose)
+    btn.pack(side=BOTTOM)
+    btn.place(anchor='e', relx=0.90, rely=0.70)
+
+    text = Text(root, width=12, height=4)
+    text.pack(side=RIGHT)
+    text.place(anchor='center', relx=0.83, rely=0.4)
+
+    root.mainloop()
+
+    return result
+
+
+# print(gui("./InstaPost/a.png"))

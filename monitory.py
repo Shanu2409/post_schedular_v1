@@ -5,6 +5,7 @@ import posting as p
 from logging import root
 from tkinter import *
 from PIL import ImageTk, Image
+# import resize as re
 
 
 # root.geometry('750x580+700+200')
@@ -29,19 +30,18 @@ class Watcher:
         self.observer.join()
         print("\nWatcher Terminated\n")
 
+
 class MyHandler(FileSystemEventHandler):
 
     def on_created(self, event):
         print(event)
         src = event.src_path
+        src = src.replace("\\", "/")
+        print("\n\n\n\n\n\n ", type(src))
+        print("./img_file"+src[1:])
         p.posting(src)
-        
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     w = Watcher(".", MyHandler())
     w.run()
-
-
-
-
-
